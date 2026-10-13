@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">NabdTask</string>
+
+    <string name="title_waveline_test">Waveline Test</string>
+
+    <string name="btn_schedule_notification">Schedule this notification</string>
+    <string name="menu_cancel_all">Cancel All</string>
+    <string name="menu_cancel">CANCEL</string>
+    <string name="dialog_ok">OK</string>
+
+    <string name="toast_notifications_enabled">Notifications enabled</string>
+    <string name="toast_notifications_denied">Notifications permission denied</string>
+    <string name="toast_all_scheduled_cancelled">All scheduled notifications cancelled</string>
+    <string name="toast_notification_cancelled">Notification cancelled</string>
+
+    <string name="dialog_notification_scheduled_title">Notification Scheduled</string>
+    <string name="dialog_notification_scheduled_msg">WorkManager task set to trigger in %1$d seconds.</string>
+
+    <string name="notification_channel_name">Scheduled Notifications</string>
+    <string name="notification_header_title">Scheduled Alert</string>
+    <string name="notification_default_title">Notification Alert</string>
+
+    <string name="fallback_title_10s">Schedule me after 10 seconds.</string>
+    <string name="fallback_title_20s">Schedule me after 20 seconds.</string>
+    <string name="fallback_title_30s">Schedule me after 30 seconds.</string>
+    <string name="fallback_title_40s">Schedule me after 40 seconds.</string>
+    <string name="fallback_title_50s">Schedule me after 50 seconds.</string>
+    <string name="fallback_title_60s">Schedule me after 60 seconds.</string>
+    <string name="fallback_title_3min">Schedule me after 3 minutes.</string>
+</resources>
