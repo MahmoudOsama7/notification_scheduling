@@ -51,9 +51,21 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnSchedule.setOnClickListener {
-            viewModel.processIntent(
-                DetailContract.Intent.ScheduleNotification
-            )
+            showConfirmationDialog()
+        }
+    }
+
+    private fun showConfirmationDialog() {
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.dialog_confirm_schedule_title)
+            setMessage(R.string.dialog_confirm_schedule_message)
+            setPositiveButton(R.string.dialog_confirm) { _, _ ->
+                viewModel.processIntent(
+                    DetailContract.Intent.ScheduleNotification
+                )
+            }
+            setNegativeButton(R.string.dialog_cancel, null)
+            show()
         }
     }
 
@@ -102,16 +114,17 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showScheduleDialog(delayInSeconds: Long) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_notification_scheduled_title)
-            .setMessage(
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.dialog_notification_scheduled_title)
+            setMessage(
                 getString(
                     R.string.dialog_notification_scheduled_msg,
                     delayInSeconds
                 )
             )
-            .setPositiveButton(R.string.dialog_ok, null)
-            .show()
+            setPositiveButton(R.string.dialog_ok, null)
+            show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
