@@ -27,4 +27,9 @@
     <string name="fallback_title_50s">Schedule me after 50 seconds.</string>
     <string name="fallback_title_60s">Schedule me after 60 seconds.</string>
     <string name="fallback_title_3min">Schedule me after 3 minutes.</string>
+
+    <string name="dialog_confirm_schedule_title">Schedule Notification</string>
+    <string name="dialog_confirm_schedule_message">Are you sure you want to schedule this notification?</string>
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_cancel">Cancel</string>
 </resources>
