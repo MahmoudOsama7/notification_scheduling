@@ -33,16 +33,30 @@ class MainViewModel @Inject constructor(
         when (intent) {
             is MainContract.Intent.LoadData -> loadData()
             is MainContract.Intent.SelectNotification -> {
+                _uiState.update { it.copy(isNavigatingToDetail = true) }
                 viewModelScope.launch {
                     _effect.emit(MainContract.Effect.NavigateToDetail(intent.item))
                 }
             }
+
             is MainContract.Intent.CancelAllNotifications -> cancelAllNotifications()
+            is MainContract.Intent.OnActivityStart -> {
+                if (_uiState.value.isNavigatingToDetail) {
+                    _uiState.update { it.copy(isNavigatingToDetail = false) }
+                } else {
+                    loadData()
+                }
+            }
         }
     }
 
     private fun loadData() {
-        _uiState.update { it.copy(isLoading = true) }
+        _uiState.update {
+            it.copy(
+                isLoading = true,
+                notifications = emptyList()
+            )
+        }
 
         viewModelScope.launch(Dispatchers.IO) {
             val data = getNotificationsUseCase()
