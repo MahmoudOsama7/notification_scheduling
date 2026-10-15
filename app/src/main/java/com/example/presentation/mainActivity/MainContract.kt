@@ -8,11 +8,13 @@ object MainContract {
         object LoadData : Intent
         data class SelectNotification(val item: NotificationItemDto) : Intent
         object CancelAllNotifications : Intent
+        object OnActivityStart : Intent
     }
 
     data class State(
         val isLoading: Boolean = false,
-        val notifications: List<NotificationItemDto> = emptyList()
+        val notifications: List<NotificationItemDto> = emptyList(),
+        val isNavigatingToDetail: Boolean = false
     )
 
     sealed interface Effect {

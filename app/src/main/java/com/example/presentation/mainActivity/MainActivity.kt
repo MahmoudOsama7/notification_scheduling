@@ -57,9 +57,9 @@ class MainActivity : AppCompatActivity() {
         checkAndRequestNotificationPermission()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.processIntent(MainContract.Intent.LoadData)
+    override fun onStart() {
+        super.onStart()
+        viewModel.processIntent(MainContract.Intent.OnActivityStart)
     }
 
     private fun setupRecyclerView() {
