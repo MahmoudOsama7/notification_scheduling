@@ -9,6 +9,10 @@ object MainContract {
         data class SelectNotification(val item: NotificationItemDto) : Intent
         object CancelAllNotifications : Intent
         object OnActivityStart : Intent
+        data class OnDetailReturned(
+            val item: NotificationItemDto?,
+            val wasInBackground: Boolean
+        ) : Intent
     }
 
     data class State(

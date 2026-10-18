@@ -45,6 +45,36 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
     }
 
+    private val detailActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val wasInBackground = result.data?.getBooleanExtra(
+                AppConstants.EXTRA_IS_IN_BACKGROUND,
+                false
+            ) ?: false
+
+            if (wasInBackground) {
+                val returnedItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    result.data?.getParcelableExtra(
+                        AppConstants.EXTRA_RETURN_DATA,
+                        NotificationItemDto::class.java
+                    )
+                } else {
+                    @Suppress("DEPRECATION")
+                    result.data?.getParcelableExtra(AppConstants.EXTRA_RETURN_DATA)
+                }
+
+                viewModel.processIntent(
+                    MainContract.Intent.OnDetailReturned(
+                        item = returnedItem,
+                        wasInBackground = true
+                    )
+                )
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -122,7 +152,7 @@ class MainActivity : AppCompatActivity() {
             putExtra(AppConstants.EXTRA_NOTIFICATION, item)
         }
 
-        startActivity(intent)
+        detailActivityResultLauncher.launch(intent)
     }
 
     private fun checkAndRequestNotificationPermission() {

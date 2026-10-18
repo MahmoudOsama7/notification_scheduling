@@ -8,10 +8,12 @@ object DetailContract {
         object ScheduleNotification : Intent
         object CancelNotification : Intent
         object NavigateBack : Intent
+        object OnAppBackgrounded : Intent
     }
 
     data class State(
-        val notificationItemDto: NotificationItemDto? = null
+        val notificationItemDto: NotificationItemDto? = null,
+        val isInBackground: Boolean = false
     )
 
     sealed interface Effect {

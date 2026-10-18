@@ -4,14 +4,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.core.constants.AppConstants
 import com.example.presentation.R
-import com.example.presentation.mainActivity.MainActivity
 
 class NotificationWorker(
     context: Context,
@@ -35,9 +33,8 @@ class NotificationWorker(
             notificationManager.createNotificationChannel(channel)
         }
 
-        val contentIntent = Intent(applicationContext, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
+        val contentIntent = applicationContext.packageManager
+            .getLaunchIntentForPackage(applicationContext.packageName)
 
         val pendingIntent = PendingIntent.getActivity(
             applicationContext,
