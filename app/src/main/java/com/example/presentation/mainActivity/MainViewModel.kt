@@ -47,6 +47,12 @@ class MainViewModel @Inject constructor(
                     loadData()
                 }
             }
+
+            is MainContract.Intent.OnDetailReturned -> {
+                if (intent.wasInBackground) {
+                    loadData()
+                }
+            }
         }
     }
 

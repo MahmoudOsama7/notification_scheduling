@@ -11,8 +11,6 @@ object AppConstants {
     const val NETWORK_TIMEOUT_MS = 5000
 
     const val CHANNEL_ID = "local_alerts_channel"
-
-    // XML Tag Constants
     const val XML_TAG_NOTIFICATION = "notification"
     const val XML_TAG_ITEM = "item"
     const val XML_TAG_ID = "id"
@@ -24,4 +22,6 @@ object AppConstants {
 
     const val WORK_TAG_NOTIFICATION = "notification_work"
     const val WORK_UNIQUE_PREFIX = "notification_work_"
+    const val EXTRA_RETURN_DATA = "extra_return_data"
+    const val EXTRA_IS_IN_BACKGROUND = "is_in_background"
 }

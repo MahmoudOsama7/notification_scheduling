@@ -1,13 +1,16 @@
 package com.example.presentation.detailsActivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.core.constants.AppConstants
@@ -32,6 +35,8 @@ class DetailActivity : AppCompatActivity() {
 
         setupToolbar()
         setupListeners()
+        setupBackPressed()
+        setupBackgroundObserver()
         observeViewModel()
 
         if (savedInstanceState == null) {
@@ -53,6 +58,24 @@ class DetailActivity : AppCompatActivity() {
         binding.btnSchedule.setOnClickListener {
             showConfirmationDialog()
         }
+    }
+
+    private fun setupBackPressed() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.processIntent(
+                    DetailContract.Intent.NavigateBack
+                )
+            }
+        })
+    }
+
+    private fun setupBackgroundObserver() {
+        lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                viewModel.processIntent(DetailContract.Intent.OnAppBackgrounded)
+            }
+        })
     }
 
     private fun showConfirmationDialog() {
@@ -108,9 +131,19 @@ class DetailActivity : AppCompatActivity() {
             }
 
             is DetailContract.Effect.FinishActivity -> {
-                finish()
+                setResultAndFinish()
             }
         }
+    }
+
+    private fun setResultAndFinish() {
+        val currentState = viewModel.uiState.value
+        val returnIntent = Intent().apply {
+            putExtra(AppConstants.EXTRA_RETURN_DATA, currentState.notificationItemDto)
+            putExtra(AppConstants.EXTRA_IS_IN_BACKGROUND, currentState.isInBackground)
+        }
+        setResult(RESULT_OK, returnIntent)
+        finish()
     }
 
     private fun showScheduleDialog(delayInSeconds: Long) {

@@ -40,6 +40,9 @@ class DetailViewModel @Inject constructor(
                     _effect.emit(DetailContract.Effect.FinishActivity)
                 }
             }
+            is DetailContract.Intent.OnAppBackgrounded -> {
+                _uiState.update { it.copy(isInBackground = true) }
+            }
         }
     }
 
